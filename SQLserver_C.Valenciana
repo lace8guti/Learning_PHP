@@ -1,3 +1,4 @@
+1. Código SQL
 ```
 -- phpMyAdmin SQL Dump
 -- version 5.1.3
@@ -145,6 +146,7 @@ ALTER TABLE `municipi`
 COMMIT;
 
 ```
+2. Código php
 
 ```
 
