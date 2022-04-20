@@ -145,3 +145,69 @@ ALTER TABLE `municipi`
 COMMIT;
 
 ```
+
+```
+
+<?php
+
+ini_set('display_errors', 1);
+
+ini_set('display_startup_errors', 1);
+
+error_reporting(E_ALL);
+
+	$mysqli = new mysqli("localhost", "root", "", "soc_db");
+
+	/* comprobar la conexión */
+	if (mysqli_connect_errno()) {
+		printf("Falló la conexión: %s\n", mysqli_connect_error());
+		exit();
+	}
+
+
+
+function select($sql){
+	
+	$mysqli = new mysqli("localhost", "root", "", "soc_db");
+
+	/* comprobar la conexión */
+	if (mysqli_connect_errno()) {
+		printf("Falló la conexión: %s\n", mysqli_connect_error());
+		exit();
+	}
+	echo "<b>";
+	echo $sql;
+	echo "</b>";
+	echo '<br>';
+	
+	if ($resultado = $mysqli->query($sql)){
+		while ($fila = $resultado->fetch_row()) {
+		   // printf("%s (%s,%s)\n", $fila[0], $fila[1], $fila[2]);
+	
+	foreach ($fila as $v){
+		echo "$v -";
+}
+	echo '<br>';
+
+		}
+	}
+
+	$resultado->close();
+
+	
+}
+
+
+$sql = "SELECT * FROM `fotos` WHERE `IdFoto`=11;";
+
+select($sql);
+echo '<br>';
+//$sql = "SELECT fotos.Titulo, NomPais, albumes.Titulo FROM `fotos`,`paises`,`albumes` WHERE paises.IdPais = fotos.Pais and fotos.Album = albumes.IdAlbum";
+$sql = "SELECT NomProvincia FROM `provincia`, municipi  WHERE INE = 3065 and provincia.IdProvincia = municipi.IdProvincia ";
+
+select($sql);
+/* cerrar la conexión */
+	$mysqli->close();
+?>
+
+```
