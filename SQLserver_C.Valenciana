@@ -1,0 +1,147 @@
+```
+-- phpMyAdmin SQL Dump
+-- version 5.1.3
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 20-04-2022 a las 19:20:39
+-- Versión del servidor: 10.4.24-MariaDB
+-- Versión de PHP: 8.1.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+-- Base de datos: `soc_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `comarca`
+--
+
+CREATE TABLE `comarca` (
+  `IdComarca` int(11) NOT NULL,
+  `NomComarca` varchar(200) NOT NULL,
+  `IdProvincia` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `comarca`
+--
+
+INSERT INTO `comarca` (`IdComarca`, `NomComarca`, `IdProvincia`) VALUES
+(1, 'El Baix Segura / La Vega Baja', 3),
+(2, 'El Baix Vinalopó', 3),
+(3, 'El Comtat', 3),
+(4, 'El Vinalopó Mitjà / El Vinalopó Medio', 3),
+(5, 'El Camp de Morvedre', 2),
+(6, 'El Camp de Túria', 2),
+(7, 'El Rincón de Ademuz', 2),
+(8, 'El Valle de Cofrentes-Ayora', 2),
+(9, 'El Alto Mijares', 1),
+(10, 'El Alto Palancia', 1),
+(11, 'El Baix Maestrat', 1),
+(12, 'Els Ports', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `municipi`
+--
+
+CREATE TABLE `municipi` (
+  `INE` int(11) NOT NULL,
+  `NomMunicipi` varchar(200) NOT NULL,
+  `IdComarca` int(11) NOT NULL,
+  `IdProvincia` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `municipi`
+--
+
+INSERT INTO `municipi` (`INE`, `NomMunicipi`, `IdComarca`, `IdProvincia`) VALUES
+(3065, 'Elx/Elche', 2, 3),
+(3105, 'Pinós, el/Pinoso', 4, 3),
+(12079, 'Montanejos', 9, 1),
+(12081, 'Navajas', 9, 1),
+(46052, 'Benavites', 5, 2),
+(46256, 'Vilamarxant', 6, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `provincia`
+--
+
+CREATE TABLE `provincia` (
+  `IDprovincia` int(11) NOT NULL,
+  `NomProvincia` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `provincia`
+--
+
+INSERT INTO `provincia` (`IDprovincia`, `NomProvincia`) VALUES
+(1, 'Castello'),
+(2, 'Valencia'),
+(3, 'Alacant');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `comarca`
+--
+ALTER TABLE `comarca`
+  ADD PRIMARY KEY (`IdComarca`,`IdProvincia`),
+  ADD KEY `IdProvincia` (`IdProvincia`);
+
+--
+-- Indices de la tabla `municipi`
+--
+ALTER TABLE `municipi`
+  ADD PRIMARY KEY (`INE`,`IdComarca`,`IdProvincia`),
+  ADD KEY `IdComarca` (`IdComarca`),
+  ADD KEY `IdProvincia` (`IdProvincia`);
+
+--
+-- Indices de la tabla `provincia`
+--
+ALTER TABLE `provincia`
+  ADD PRIMARY KEY (`IDprovincia`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `provincia`
+--
+ALTER TABLE `provincia`
+  MODIFY `IDprovincia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `comarca`
+--
+ALTER TABLE `comarca`
+  ADD CONSTRAINT `comarca_ibfk_1` FOREIGN KEY (`IdProvincia`) REFERENCES `provincia` (`IDprovincia`);
+
+--
+-- Filtros para la tabla `municipi`
+--
+ALTER TABLE `municipi`
+  ADD CONSTRAINT `municipi_ibfk_1` FOREIGN KEY (`IdComarca`) REFERENCES `comarca` (`IdComarca`),
+  ADD CONSTRAINT `municipi_ibfk_2` FOREIGN KEY (`IdProvincia`) REFERENCES `provincia` (`IDprovincia`);
+COMMIT;
+
+```
